@@ -1,0 +1,108 @@
+<div class="bg-[#fff1f3] min-h-screen flex flex-col">
+  <!-- Hero Section -->
+  <section class="flex flex-col md:flex-row items-center justify-between px-8 py-16 max-w-7xl mx-auto">
+    <div class="md:w-1/2 space-y-6">
+      <h1 class="text-4xl md:text-5xl font-bold text-[#91273D]">La communication fluide, sans friction.</h1>
+      <h2 class="text-xl md:text-2xl text-[#E91E63] font-medium">Visioconférence, chat instantané et gestion de contacts
+        — tout en un seul clic.</h2>
+      <div class="flex gap-4 mt-6">
+        <button mat-flat-button color="primary"
+          class="!bg-[#91273D] !text-white px-6 py-3 rounded-xl font-semibold shadow hover:!bg-[#7a1e33] transition"
+          (click)="goToRegister()">
+          Commencer
+        </button>
+        <button mat-stroked-button color="warn"
+          class="!border-[#E91E63] !text-[#E91E63] px-6 py-3 rounded-xl font-semibold hover:!bg-[#ffe4ec] transition"
+          (click)="scrollToFeatures()">
+          Voir les fonctionnalités
+        </button>
+      </div>
+    </div>
+    <div class="md:w-1/2 flex justify-center mt-10 md:mt-0">
+      <img src="vectors/telecommuting-rafiki.svg" alt="Illustration visioconférence" class="w-4/5 max-w-md" />
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-12 max-w-5xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="flex items-start gap-4">
+        <span class="text-3xl text-[#91273D]">🎥</span>
+        <div>
+          <h3 class="font-bold text-lg text-[#91273D]">Appels vidéo</h3>
+          <p>Crée ou rejoins une salle, en un instant.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-4">
+        <span class="text-3xl text-[#E91E63]">💬</span>
+        <div>
+          <h3 class="font-bold text-lg text-[#E91E63]">Messagerie instantanée</h3>
+          <p>Discussions fluides, même hors appel.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-4">
+        <span class="text-3xl text-[#91273D]">📇</span>
+        <div>
+          <h3 class="font-bold text-lg text-[#91273D]">Gestion de contacts</h3>
+          <p>Ajoute, partage, connecte.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-4">
+        <span class="text-3xl text-[#E91E63]">🔒</span>
+        <div>
+          <h3 class="font-bold text-lg text-[#E91E63]">Sécurisé & Gratuit</h3>
+          <p>Pas de pièges, pas de pubs, que de la simplicité.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Target Audience Section -->
+  <section class="bg-[#ffe4ec] py-12">
+    <div class="max-w-4xl mx-auto text-center space-y-4">
+      <div class="flex justify-center gap-6 mb-4 text-3xl">
+        <span>👩‍🎓</span><span>👨‍🏫</span><span>👩‍💼</span><span>👫</span>
+      </div>
+      <h3 class="text-xl font-semibold text-[#91273D]">Étudiants, enseignants, pros, amis — ConferEase s’adapte à vos
+        besoins.</h3>
+      <div class="mt-4 space-y-2">
+        <p>Un projet de groupe à discuter ? <span class="font-semibold text-[#E91E63]">Créez une salle.</span></p>
+        <p>Juste un message rapide ? <span class="font-semibold text-[#E91E63]">Ouvrez le chat.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works / Steps Section -->
+  <section class="py-12 max-w-4xl mx-auto">
+    <h3 class="text-2xl font-bold text-center text-[#91273D] mb-8">Comment ça marche ?</h3>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+      <div>
+        <div class="text-4xl mb-2">📝</div>
+        <div class="font-semibold">Créer un compte</div>
+      </div>
+      <div>
+        <div class="text-4xl mb-2">🤝</div>
+        <div class="font-semibold">Ajouter un contact</div>
+      </div>
+      <div>
+        <div class="text-4xl mb-2">🎥💬</div>
+        <div class="font-semibold">Créer une salle ou envoyer un message</div>
+      </div>
+      <div>
+        <div class="text-4xl mb-2">🌟</div>
+        <div class="font-semibold">Collaborer sans stress</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="py-8 flex justify-center">
+    <mat-card class="max-w-xl p-6 rounded-xl shadow bg-white border-l-4 border-[#E91E63]">
+      <mat-card-content>
+        <p class="italic text-lg">“ConferEase m’a permis d’organiser mes réunions d’équipe ET de garder le lien avec mes
+          amis. Simple, fluide, fiable.”</p>
+        <footer class="mt-4 text-right font-semibold text-[#91273D]">— Rija, étudiante</footer>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</div>

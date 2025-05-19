@@ -1,0 +1,55 @@
+<div class="min-h-screen flex items-center justify-center bg-[#fff1f3] p-6">
+  <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg">
+    <h2 class="text-2xl font-bold text-[#91273D] mb-6 text-center">Mon profil</h2>
+    <form (ngSubmit)="onSave()" class="flex flex-col items-center gap-6">
+      <!-- Profile Picture -->
+      <div class="relative">
+        <img [src]="profilePicUrl || '/avatar.jpg'" alt="avatar"
+          class="w-24 h-24 rounded-full object-cover border-4 border-[#91273D] mb-2" />
+        <input type="file" accept="image/*" (change)="onFileSelected($event)"
+          class="absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer" title="Changer la photo de profil" />
+      </div>
+      <!-- Name -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Nom d'utilisateur</mat-label>
+        <input matInput [(ngModel)]="displayName" name="displayName" required #name="ngModel" />
+        <mat-error *ngIf="name.invalid">Un nom d'utilisateur est requis</mat-error>
+      </mat-form-field>
+      <!-- Email (readonly) -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Email</mat-label>
+        <input matInput [value]="email" name="email" readonly />
+      </mat-form-field>
+      <!-- Bio -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Bio</mat-label>
+        <textarea matInput [(ngModel)]="bio" name="bio" rows="2"></textarea>
+      </mat-form-field>
+
+      <!-- Phone -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Téléphone</mat-label>
+        <input matInput type="tel" [(ngModel)]="phone" name="phone" />
+      </mat-form-field>
+
+      <!-- Birthday -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Date de naissance</mat-label>
+        <input matInput type="date" [(ngModel)]="birthday" name="birthday" />
+      </mat-form-field>
+
+      <!-- Location -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Ville</mat-label>
+        <input matInput [(ngModel)]="location" name="location" />
+      </mat-form-field>
+      <!-- Save Button -->
+      <button mat-flat-button color="primary" class="!bg-[#91273D] !text-white rounded-lg px-6 py-2 w-full"
+        type="submit" (click)="onSave()">
+        Sauvegarder
+      </button>
+      <mat-hint *ngIf="success" class="text-green-600 text-center">{{ success }}</mat-hint>
+      <mat-error *ngIf="error" class="text-[#AD1457] text-center">{{ error }}</mat-error>
+    </form>
+  </div>
+</div>

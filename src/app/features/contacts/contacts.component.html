@@ -1,0 +1,75 @@
+<div class="p-6 bg-white rounded-xl shadow-md space-y-8 max-w-3xl mx-auto">
+  <!-- Ajouter un contact -->
+  <div>
+    <h2 class="text-xl font-bold text-[#91273D] mb-4 flex items-center gap-2">
+      <mat-icon class="text-[#91273D]">person_add</mat-icon>
+      Ajouter un contact
+    </h2>
+    <div class="flex gap-4 items-center relative">
+      <input [(ngModel)]="contactEmail" (ngModelChange)="onEmailInputChange($event)" placeholder="Email du contact"
+        class="flex-1 border border-[#91273D] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#91273D]" />
+      <button (click)="searchContact()"
+        class="bg-[#91273D] hover:bg-[#7a1e33] text-white rounded px-4 py-2 flex items-center gap-1">
+        <mat-icon>search</mat-icon>
+      </button>
+      <ul *ngIf="suggestions.length"
+        class="absolute left-0 top-full bg-white border border-[#91273D] rounded shadow w-full z-10 mt-1">
+        <li *ngFor="let user of suggestions" (click)="selectSuggestion(user)"
+          class="px-3 py-2 cursor-pointer hover:bg-[#fce4ec]">
+          {{ user.email }}
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="foundContact" class="flex items-center gap-4 mt-3">
+      <span class="text-[#444]">{{ foundContact.email }}</span>
+      <button (click)="addContact(foundContact)"
+        class="bg-green-600 hover:bg-green-700 text-white rounded px-4 py-2 flex items-center gap-1">
+        <mat-icon>person_add</mat-icon>
+        Ajouter
+      </button>
+    </div>
+    <div *ngIf="success" class="text-green-600 mt-2">{{ success }}</div>
+    <div *ngIf="error" class="text-red-600 mt-2">{{ error }}</div>
+  </div>
+  <!-- Contacts -->
+  <div>
+    <h2 class="text-xl font-bold text-[#91273D] mb-4 flex items-center gap-2">
+      <mat-icon class="text-[#91273D]">group</mat-icon>
+      Mes contacts
+    </h2>
+    <ul class="space-y-2">
+      <li *ngFor="let contact of contacts" class="flex justify-between items-center bg-[#fff1f3] rounded-lg px-4 py-2">
+        <span class="text-[#444]">{{ contact.email }}</span>
+        <button (click)="deleteContact(contact.uid)"
+          class="text-sm text-white bg-red-500 hover:bg-red-600 rounded px-3 py-1 flex items-center gap-1">
+          <mat-icon fontIcon="delete" class="text-white text-base"></mat-icon>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Demandes reçues -->
+  <div>
+    <h2 class="text-xl font-bold text-[#91273D] mb-4 flex items-center gap-2">
+      <mat-icon class="text-[#91273D]">inbox</mat-icon>
+      Demandes reçues
+    </h2>
+    <ul class="space-y-2">
+      <li *ngFor="let req of requests" class="flex justify-between items-center bg-[#fff1f3] rounded-lg px-4 py-2">
+        <span class="text-[#444]">{{ req.fromEmail }}</span>
+        <div class="space-x-2">
+          <button (click)="acceptRequest(req.id, req.fromUid)"
+            class="text-sm text-white bg-green-500 hover:bg-green-600 rounded px-3 py-1 flex items-center gap-1">
+            <mat-icon>check</mat-icon>
+          </button>
+          <button (click)="refuseRequest(req.id)"
+            class="text-sm text-white bg-gray-400 hover:bg-gray-500 rounded px-3 py-1 flex items-center gap-1">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+
+</div>

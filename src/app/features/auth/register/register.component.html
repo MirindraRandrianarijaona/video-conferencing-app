@@ -1,0 +1,63 @@
+<div class="min-h-screen flex items-center justify-center bg-[#fff1f3] p-6">
+  <div class="bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-5xl grid grid-cols-1 md:grid-cols-2">
+
+    <!-- Formulaire -->
+    <div class="p-8">
+      <h2 class="text-3xl font-semibold text-[#AD1457] mb-6">Créer un compte</h2>
+
+      <form (ngSubmit)="onRegister()">
+
+
+        <!-- Email -->
+        <mat-form-field appearance="fill" floatLabel="always" class="w-full mb-4">
+          <mat-label style="color: #AD1457;">Adresse Email</mat-label>
+          <mat-icon matPrefix style="color: #91273D;">mail</mat-icon>
+          <input matInput type="email" [(ngModel)]="email" name="email" style="color: #AD1457 pl-2;" required />
+        </mat-form-field>
+
+        <!-- Mot de passe -->
+        <mat-form-field appearance="fill" floatLabel="always" class="w-full mb-4">
+          <mat-label style="color: #AD1457;">Mot de passe</mat-label>
+          <mat-icon matPrefix style="color: #91273D;">lock</mat-icon>
+          <input matInput type="password" [(ngModel)]="password" name="password" style="color: #AD1457 pl-2;"
+            required />
+        </mat-form-field>
+
+        <mat-hint *ngIf="success" class="block text-green-600 text-center mb-2">
+          <mat-icon class="align-middle mr-1">check_circle</mat-icon>
+          {{ success }}
+        </mat-hint>
+        <mat-error *ngIf="error" class="block text-center text-[#AD1457] mb-2">
+          <mat-icon class="align-middle mr-1">error</mat-icon>
+          {{ error }}
+        </mat-error>
+
+        <!-- Bouton -->
+        <div class="flex justify-center mt-4">
+          <button mat-raised-button
+            class="!bg-[#91273D] hover:!bg-[#7a1e33] !text-white font-semibold py-2 px-6 rounded-xl" type="submit">
+            S'inscrire
+          </button>
+        </div>
+      </form>
+
+      <div class="flex justify-center my-4">
+        <button mat-stroked-button color="primary" (click)="onGoogleRegister()"
+          class="flex items-center justify-center gap-2 border !border-[#91273D] text-[#91273D] hover:!bg-[#ffe4ec] font-semibold rounded-xl p-2 px-3 transition-colors duration-200 ease-in-out">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="w-5 h-5" />
+        </button>
+      </div>
+
+      <!-- Lien vers la connexion -->
+      <div class="text-center mt-6 text-sm text-gray-700">
+        Tu as déjà un compte ?
+        <a routerLink="/login" class="text-[#91273D] font-semibold hover:underline">Connecte-toi ici</a>
+      </div>
+    </div>
+
+    <!-- Illustration -->
+    <div class="hidden md:flex items-center justify-center bg-[#ffe4ec]">
+      <img src="vectors/sign-up-amico.svg" alt="Illustration" class="w-3/4" />
+    </div>
+  </div>
+</div>

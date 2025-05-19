@@ -1,0 +1,56 @@
+<nav class="bg-white shadow-md px-6 py-2 flex items-center justify-between">
+  <!-- App Name -->
+  <a routerLink="/home" class="flex items-center">
+    <span class="text-2xl font-bold text-[#91273D] tracking-wide"
+      style="font-family: 'Playfair Display', sans-serif;">ConferEase</span>
+  </a>
+
+  <!-- Navigation Links -->
+  <div class="flex gap-6 items-center">
+    <ng-container *ngIf="user$ | async as user; else guestLinks">
+      <a routerLink="/dashboard" routerLinkActive="font-bold text-[#91273D]"
+        class="text-[#91273D] hover:underline transition">Dashboard</a>
+      <a routerLink="/contacts" class="text-[#91273D] hover:underline transition">Contacts</a>
+      <a routerLink="/chat" class="text-[#91273D] hover:underline transition">Chat</a>
+    </ng-container>
+    <ng-template #guestLinks>
+      <a routerLink="/home" routerLinkActive="font-bold text-[#91273D]"
+        class="text-[#91273D] hover:underline transition">Accueil</a>
+      <span class="text-gray-400 cursor-not-allowed">Contacts</span>
+      <span class="text-gray-400 cursor-not-allowed">Chat</span>
+    </ng-template>
+  </div>
+
+  <!-- Auth Buttons -->
+  <div class="flex items-center gap-4">
+    <ng-container *ngIf="!(user$ | async); else loggedIn">
+      <button mat-stroked-button color="primary" routerLink="/login"
+        class="!border-[#91273D] !text-[#91273D] rounded-lg px-4 py-1">
+        Connexion
+      </button>
+      <button mat-flat-button color="primary" routerLink="/register"
+        class="!bg-[#91273D] !text-white rounded-lg px-4 py-1">
+        Inscription
+      </button>
+    </ng-container>
+
+    <ng-template #loggedIn>
+      <ng-container *ngIf="user$ | async as user">
+        <div class="flex items-center gap-3">
+
+          <!-- Avatar cliquable redirigeant vers le profil -->
+          <a routerLink="/profile" class="hover:opacity-80 transition">
+            <img [src]="user?.photoURL || 'avatar.jpg'" alt="avatar"
+              class="w-8 h-8 rounded-full object-cover border border-[#91273D]" />
+          </a>
+
+          <!-- Déconnexion -->
+          <button mat-stroked-button color="primary" (click)="logout()"
+            class="!border-[#91273D] !text-[#91273D] rounded-lg px-4 py-1">
+            Déconnexion
+          </button>
+        </div>
+      </ng-container>
+    </ng-template>
+  </div>
+</nav>

@@ -1,0 +1,32 @@
+<div class="min-h-screen bg-[#fff1f3] p-6 grid grid-cols-12 gap-6">
+  <!-- Contacts -->
+  <aside class="col-span-3 bg-white rounded-2xl shadow-2xl p-4 flex flex-col">
+    <h2 class="text-xl font-semibold text-[#91273D] mb-4">Contacts</h2>
+    <!-- Liste des contacts ici -->
+    <div class="flex-1 overflow-auto text-gray-500">
+      <app-contacts></app-contacts>
+      Aucun contact pour le moment...
+    </div>
+  </aside>
+
+  <!-- Centre - Créer une salle -->
+  <main class="col-span-6 bg-white rounded-2xl shadow-2xl p-6 flex flex-col">
+    <h2 class="text-xl font-semibold text-[#91273D] mb-4">Créer une salle</h2>
+    <div class="flex-1 flex flex-col items-center justify-center text-center text-gray-600">
+      <p class="mb-4">Vous n'avez pas encore de salle active.</p>
+      <button
+        class="bg-[#91273D] hover:bg-[#7a1e33] text-white font-semibold px-6 py-2 rounded-xl transition duration-300">
+        Créer maintenant
+      </button>
+    </div>
+  </main>
+
+  <!-- Messages -->
+  <section class="col-span-3 bg-white rounded-2xl shadow-2xl p-4 flex flex-col">
+    <h2 class="text-xl font-semibold text-[#91273D] mb-4">Messages</h2>
+    <!-- Liste des messages -->
+    <div class="flex-1 overflow-auto text-gray-500">
+      Aucune conversation disponible.
+    </div>
+  </section>
+</div>
