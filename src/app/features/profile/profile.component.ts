@@ -61,9 +61,9 @@ export class ProfileComponent {
     });
   }
 
-  async loadExtraProfileFields(uid: string) {
-    const db = getFirestore();
-    await setDoc(
+async saveExtraProfileFields(uid: string) {
+  const db = getFirestore();
+  await setDoc(
     doc(db, 'users', uid),
     {
       bio: this.bio,
@@ -77,7 +77,27 @@ export class ProfileComponent {
     { merge: true }
   );
   console.log('Firestore updated');
+}
+
+async loadExtraProfileFields(uid: string) {
+  const db = getFirestore();
+  const docRef = doc(db, 'users', uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const data = docSnap.data() as UserProfile;
+    this.bio = data.bio || '';
+    this.phone = data.phone || '';
+    this.birthday = data.birthday || '';
+    this.location = data.location || '';
+    this.displayName = data.displayName || this.displayName;
+    this.email = data.email || this.email;
+    this.profilePicUrl = data.photoURL || this.profilePicUrl;
+  } else {
+    console.log("Pas encore de données extra pour cet utilisateur.");
   }
+}
+
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -108,13 +128,11 @@ export class ProfileComponent {
 
     let photoURL = this.profilePicUrl;
 
-    // File upload debug
     if (this.selectedFile) {
       console.log('File selected:', this.selectedFile);
       const user = await this.authService.user$.pipe(take(1)).toPromise();
       if (!user) throw new Error('L\'utilisateur n\'est pas connecté');
 
-      console.log('Uploading file...');
       const filePath = `avatars/${user.uid}`;
       const storageRef = ref(this.storage, filePath);
       await uploadBytes(storageRef, this.selectedFile);
@@ -122,17 +140,13 @@ export class ProfileComponent {
       console.log('File uploaded. URL:', photoURL);
     }
 
-    // Profile update debug
-    console.log('Updating profile...');
     await this.authService.updateProfile(
       this.displayName,
       photoURL || undefined
     );
 
-    // Firestore debug
     const user = await this.authService.user$.pipe(take(1)).toPromise();
     if (user) {
-      console.log('Updating Firestore...');
       const db = getFirestore();
       await setDoc(
         doc(db, 'users', user.uid),
@@ -140,7 +154,10 @@ export class ProfileComponent {
           bio: this.bio,
           phone: this.phone,
           birthday: this.birthday,
-          location: this.location
+          location: this.location,
+          displayName: this.displayName,
+          email: user.email?.toLowerCase() || '',
+          photoURL: photoURL || ''
         },
         { merge: true }
       );
@@ -155,4 +172,5 @@ export class ProfileComponent {
     this.error = err instanceof Error ? err.message : 'Erreur lors de la mise à jour du profil';
   }
 }
+
 }

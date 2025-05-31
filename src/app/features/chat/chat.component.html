@@ -1,1 +1,46 @@
-<p>chat works!</p>
+<div class="h-full flex flex-col bg-white rounded-2xl shadow-xl p-4">
+  <!-- Header de conversation -->
+  <div class="flex items-center gap-3 mb-4">
+    <img [src]="contact.photoURL || 'assets/default-avatar.png'" class="w-10 h-10 rounded-full border shadow" />
+    <div class="text-[#91273D] text-lg font-semibold">
+      {{ contact.email }}
+    </div>
+  </div>
+
+  <!-- Messages affichés -->
+  <div class="flex-1 overflow-y-auto space-y-3 pr-2 bg-[#fff6f7] p-3 rounded-xl shadow-inner">
+    <div *ngFor="let msg of messages">
+      <div class="flex" [ngClass]="{
+          'justify-end': msg.senderId === currentUser?.uid,
+          'justify-start': msg.senderId !== currentUser?.uid
+        }">
+        <div class="max-w-xs md:max-w-sm rounded-2xl px-4 py-2 text-sm shadow-md relative" [ngClass]="{
+    'bg-[#91273D] text-white rounded-br-none': msg.senderId === currentUser?.uid,
+    'bg-gray-200 text-gray-800 rounded-bl-none': msg.senderId !== currentUser?.uid
+  }">
+
+          <div>{{ msg.text }}</div>
+
+          <div class="text-[11px] mt-1 text-pink-200 text-right" [ngClass]="{
+      'text-pink-200': msg.senderId === currentUser?.uid,
+      'text-gray-500': msg.senderId !== currentUser?.uid
+    }">
+            {{ msg.timestamp?.toDate() | date:'shortTime' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="mt-4 flex items-center gap-3 border-t pt-3">
+    <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()"
+      class="flex-1 rounded-full border border-gray-300 px-4 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#91273D]"
+      placeholder="Écris ton message ici..." />
+
+    <button (click)="sendMessage()"
+      class="bg-[#91273D] hover:bg-[#781f31] text-white rounded-full px-5 py-2 text-sm shadow transition duration-200">
+      Envoyer
+    </button>
+  </div>
+</div>
