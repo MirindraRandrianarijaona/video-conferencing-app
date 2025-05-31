@@ -76,7 +76,14 @@ async acceptContactRequest(requestId: string, fromUid: string) {
     const currentUser = await this.authService.user$.pipe(take(1)).toPromise() as User | null;
     if (!currentUser) throw new Error('Not authenticated');
     await deleteDoc(doc(this.db, `users/${currentUser.uid}/contacts/${contactUid}`));
-    // Optionnel : retire aussi l'utilisateur courant des contacts de l'autre
     await deleteDoc(doc(this.db, `users/${contactUid}/contacts/${currentUser.uid}`));
   }
+
+  // Récupère les données d'un utilisateur par son UID (utile pour afficher les contacts)
+  async getContactById(uid: string): Promise<any | null> {
+    const userDocRef = doc(this.db, `users/${uid}`);
+    const userSnap = await getDoc(userDocRef);
+    if (!userSnap.exists()) return null;
+  return { uid, ...userSnap.data() };
+}
 }

@@ -20,56 +20,95 @@
         </li>
       </ul>
     </div>
-    <div *ngIf="foundContact" class="flex items-center gap-4 mt-3">
-      <span class="text-[#444]">{{ foundContact.email }}</span>
+    <!-- Résultat de recherche -->
+    <div *ngIf="foundContact" class="flex items-center gap-4 mt-4 bg-[#fff1f3] p-4 rounded-xl shadow-sm">
+
+      <div class="flex-1">
+        <p class="text-[#444] font-medium">{{ foundContact.email }}</p>
+      </div>
+
       <button (click)="addContact(foundContact)"
-        class="bg-green-600 hover:bg-green-700 text-white rounded px-4 py-2 flex items-center gap-1">
+        class="bg-[#91273D] hover:bg-[#781f31] text-white rounded-full px-4 py-2 flex items-center gap-2 transition">
         <mat-icon>person_add</mat-icon>
-        Ajouter
       </button>
     </div>
-    <div *ngIf="success" class="text-green-600 mt-2">{{ success }}</div>
-    <div *ngIf="error" class="text-red-600 mt-2">{{ error }}</div>
-  </div>
-  <!-- Contacts -->
-  <div>
-    <h2 class="text-xl font-bold text-[#91273D] mb-4 flex items-center gap-2">
-      <mat-icon class="text-[#91273D]">group</mat-icon>
-      Mes contacts
-    </h2>
-    <ul class="space-y-2">
-      <li *ngFor="let contact of contacts" class="flex justify-between items-center bg-[#fff1f3] rounded-lg px-4 py-2">
-        <span class="text-[#444]">{{ contact.email }}</span>
-        <button (click)="deleteContact(contact.uid)"
-          class="text-sm text-white bg-red-500 hover:bg-red-600 rounded px-3 py-1 flex items-center gap-1">
-          <mat-icon fontIcon="delete" class="text-white text-base"></mat-icon>
-        </button>
-      </li>
-    </ul>
-  </div>
 
-  <!-- Demandes reçues -->
-  <div>
-    <h2 class="text-xl font-bold text-[#91273D] mb-4 flex items-center gap-2">
-      <mat-icon class="text-[#91273D]">inbox</mat-icon>
-      Demandes reçues
-    </h2>
-    <ul class="space-y-2">
-      <li *ngFor="let req of requests" class="flex justify-between items-center bg-[#fff1f3] rounded-lg px-4 py-2">
-        <span class="text-[#444]">{{ req.fromEmail }}</span>
-        <div class="space-x-2">
-          <button (click)="acceptRequest(req.id, req.fromUid)"
-            class="text-sm text-white bg-green-500 hover:bg-green-600 rounded px-3 py-1 flex items-center gap-1">
-            <mat-icon>check</mat-icon>
-          </button>
-          <button (click)="refuseRequest(req.id)"
-            class="text-sm text-white bg-gray-400 hover:bg-gray-500 rounded px-3 py-1 flex items-center gap-1">
-            <mat-icon>close</mat-icon>
-          </button>
-        </div>
-      </li>
-    </ul>
+    <!-- Messages de succès ou d'erreur -->
+    <div *ngIf="success" class="text-green-600 mt-3 text-sm font-medium flex items-center gap-1">
+      <mat-icon class="text-green-600">check_circle</mat-icon>
+      {{ success }}
+    </div>
+
+    <div *ngIf="error" class="text-red-600 mt-3 text-sm font-medium flex items-center gap-1">
+      <mat-icon class="text-red-600">error</mat-icon>
+      {{ error }}
+    </div>
+
+    <!-- Contacts -->
+    <div>
+      <h2 class="text-xl font-bold text-[#91273D] mb-4 flex items-center gap-2">
+        <mat-icon class="text-[#91273D]">group</mat-icon>
+        Mes contacts
+      </h2>
+      <ul class="space-y-4">
+        <li *ngFor="let contact of contacts" class="bg-[#fff1f3] rounded-xl px-4 py-4 shadow-md">
+          <div class="flex items-center gap-4">
+            <!-- Avatar -->
+            <img [src]="contact.photoURL || 'assets/default-avatar.png'" alt="avatar"
+              class="w-12 h-12 rounded-full object-cover shadow-sm border border-[#91273D]" />
+
+            <!-- Email et actions -->
+            <div class="flex-1">
+              <div class="text-[#444] text-base font-medium">{{ contact.email }}</div>
+              <div class="mt-2 flex justify-start gap-3">
+                <button (click)="openChat(contact)"
+                  class="bg-[#91273D] hover:bg-[#7a1e33] text-white rounded-full px-4 py-1 text-sm shadow transition-all duration-200 flex items-center gap-1">
+                  <mat-icon fontIcon="chat" class="text-white text-base"></mat-icon>
+                </button>
+                <button (click)="deleteContact(contact.uid)"
+                  class="bg-red-400 hover:bg-red-500 text-white rounded-full px-4 py-1 text-sm shadow transition-all duration-200 flex items-center gap-1">
+                  <mat-icon fontIcon="delete" class="text-white text-base"></mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- Demandes reçues -->
+    <div class="mb-6">
+      <h2 class="text-xl font-bold text-[#91273D] mb-4 flex items-center gap-2">
+        <mat-icon class="text-[#91273D]">inbox</mat-icon>
+        Demandes reçues
+      </h2>
+
+      <ul class="space-y-4">
+        <li *ngFor="let req of requests" class="bg-[#fff1f3] rounded-xl px-4 py-4 shadow-md">
+          <div class="flex items-center gap-4">
+            <!-- Avatar -->
+            <img [src]="req.fromPhotoURL || 'avatar.jpg'" alt="avatar"
+              class="w-12 h-12 rounded-full object-cover shadow-sm border border-[#91273D]" />
+
+            <!-- Email et actions -->
+            <div class="flex-1">
+              <div class="text-[#444] text-base font-medium">{{ req.fromEmail }}</div>
+
+              <div class="mt-2 flex justify-start gap-3">
+                <button (click)="acceptRequest(req.id, req.fromUid)"
+                  class="bg-[#91273D] hover:bg-[#7a1e33] text-white rounded-full px-4 py-1 text-sm shadow transition-all duration-200 flex items-center gap-1">
+                  <mat-icon fontIcon="check" class="text-white text-base"></mat-icon>
+                </button>
+                <button (click)="refuseRequest(req.id)"
+                  class="bg-red-400 hover:bg-red-500 text-white rounded-full px-4 py-1 text-sm shadow transition-all duration-200 flex items-center gap-1">
+                  <mat-icon fontIcon="close" class="text-white text-base"></mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </div>
   </div>
-
-
-</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { ContactService } from '../../core/services/contacts.service';
 import { AuthService } from '../../core/services/auth.service';
 import { collection, onSnapshot, getFirestore } from '@angular/fire/firestore';
@@ -15,6 +15,7 @@ import { MatIcon } from '@angular/material/icon';
   standalone: true,
 })
 export class ContactsComponent implements OnInit, OnDestroy {
+    @Output() startChat = new EventEmitter<any>();
   contactEmail = '';
   contacts: any[] = [];
   requests: any[] = [];
@@ -38,15 +39,18 @@ export class ContactsComponent implements OnInit, OnDestroy {
         const db = getFirestore();
 
         // Listen to contacts
-        this.unsubContacts = onSnapshot(
-          collection(db, `users/${user.uid}/contacts`),
-          snapshot => {
-            this.contacts = snapshot.docs.map(doc => ({
-              uid: doc.id,
-              ...doc.data()
-            }));
-          }
-        );
+    this.unsubContacts = onSnapshot(
+      collection(db, `users/${user.uid}/contacts`),
+      async snapshot => {
+        const contactPromises = snapshot.docs.map(async docSnap => {
+          const contactUid = docSnap.id;
+          const fullUser = await this.contactService.getContactById(contactUid);
+          return fullUser;
+        });
+
+        this.contacts = await Promise.all(contactPromises);
+      }
+    );
 
         // Listen to requests
         this.unsubRequests = onSnapshot(
@@ -101,7 +105,7 @@ async onEmailInputChange(value: string) {
   this.foundContact = null;
   this.success = null;
   this.error = null;
-  if (value && value.length >= 2) { // Commence à suggérer à partir de 2 caractères
+  if (value && value.length >= 2) {
     this.suggestions = await this.contactService.searchUsersByEmailPrefix(value);
   } else {
     this.suggestions = [];
@@ -133,6 +137,10 @@ selectSuggestion(user: any) {
 
   async refuseRequest(requestId: string) {
     await this.contactService.refuseContactRequest(requestId);
+  }
+
+    openChat(contact: any) {
+    this.startChat.emit(contact);
   }
 
   async deleteContact(contactUid: string) {
