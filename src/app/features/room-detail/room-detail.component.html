@@ -1,0 +1,21 @@
+<div class="max-w-xl mx-auto mt-10 p-6 border rounded-lg shadow">
+  <ng-container *ngIf="roomData; else errorBlock">
+    <h2 class="text-2xl font-semibold text-center mb-4">Salle Rejointe</h2>
+
+    <p><strong>ID :</strong> {{ roomId }}</p>
+    <p *ngIf="roomData.createdBy"><strong>Créée par :</strong> {{ roomData.createdBy }}</p>
+    <p><strong>Créée le :</strong> {{ roomData.createdAt?.toDate() | date:'short' }}</p>
+
+    <div class="mt-6 flex justify-center">
+      <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded" (click)="quitterSalle()">
+        Quitter la salle
+      </button>
+    </div>
+  </ng-container>
+  <div class="mt-10">
+    <app-video-call></app-video-call>
+  </div>
+  <ng-template #errorBlock>
+    <p class="text-red-600 text-center">{{ errorMessage }}</p>
+  </ng-template>
+</div>
