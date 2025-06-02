@@ -1,21 +1,26 @@
-<div class="max-w-xl mx-auto mt-10 p-6 border rounded-lg shadow">
+<div class="max-w-xl mx-auto mt-10 p-6 border rounded-2xl shadow-md bg-white">
   <ng-container *ngIf="roomData; else errorBlock">
-    <h2 class="text-2xl font-semibold text-center mb-4">Salle Rejointe</h2>
+    <h2 class="text-3xl font-extrabold text-center mb-6 text-[#91273D]">Salle Rejointe</h2>
 
-    <p><strong>ID :</strong> {{ roomId }}</p>
-    <p *ngIf="roomData.createdBy"><strong>Créée par :</strong> {{ roomData.createdBy }}</p>
-    <p><strong>Créée le :</strong> {{ roomData.createdAt?.toDate() | date:'short' }}</p>
+    <div class="space-y-3 text-gray-700">
+      <p><span class="font-semibold">ID :</span> <span class="break-all">{{ roomId }}</span></p>
+      <p *ngIf="roomData.createdBy"><span class="font-semibold">Créée par :</span> {{ roomData.createdBy }}</p>
+      <p><span class="font-semibold">Créée le :</span> {{ roomData.createdAt?.toDate() | date:'short' }}</p>
+    </div>
 
-    <div class="mt-6 flex justify-center">
-      <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded" (click)="quitterSalle()">
+    <div class="mt-8 flex justify-center">
+      <button (click)="quitterSalle()"
+        class="bg-[#91273D] hover:bg-[#7a1f34] text-white font-semibold px-6 py-2 rounded-xl shadow transition duration-300">
         Quitter la salle
       </button>
     </div>
   </ng-container>
-  <div class="mt-10">
+
+  <div class="mt-12">
     <app-video-call></app-video-call>
   </div>
+
   <ng-template #errorBlock>
-    <p class="text-red-600 text-center">{{ errorMessage }}</p>
+    <p class="text-red-600 text-center font-medium mt-6">{{ errorMessage }}</p>
   </ng-template>
 </div>

@@ -1,17 +1,19 @@
-<div class="p-4 max-w-md mx-auto">
-  <button (click)="createRoom()" [disabled]="isLoading"
-    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+<div class="p-6 max-w-md mx-auto bg-white rounded-2xl shadow-lg mt-10 border border-gray-100">
+  <button (click)="createRoom()" [disabled]="isLoading" class="w-full py-3 px-6 rounded-xl font-semibold transition-all duration-300
+           bg-[#91273D] hover:bg-[#7a1f34] disabled:opacity-50 disabled:cursor-not-allowed text-white">
     {{ isLoading ? 'Création en cours...' : 'Créer une salle' }}
   </button>
 
-  <div *ngIf="createdRoomId" class="mt-6 space-y-4 text-center">
-    <p class="text-green-600">Salle créée avec succès 🎉</p>
-    <p class="text-sm">ID de la salle : <strong>{{ createdRoomId }}</strong></p>
+  <div *ngIf="createdRoomId" class="mt-8 space-y-4 text-center">
+    <p class="text-green-600 font-medium">Salle créée avec succès 🎉</p>
+    <p class="text-sm text-gray-600">
+      ID de la salle :
+      <strong class="text-[#91273D]">{{ createdRoomId }}</strong>
+    </p>
 
-    <div class="flex justify-center">
-      <a [routerLink]="['/room', createdRoomId]" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded">
-        Accéder à la salle
-      </a>
-    </div>
+    <a [routerLink]="['/room', createdRoomId]"
+      class="inline-block bg-[#91273D] hover:bg-[#7a1f34] text-white font-medium px-6 py-2 rounded-lg shadow transition-all duration-300">
+      Accéder à la salle
+    </a>
   </div>
 </div>
