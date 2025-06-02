@@ -1,0 +1,17 @@
+<div class="p-4 max-w-md mx-auto">
+  <button (click)="createRoom()" [disabled]="isLoading"
+    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+    {{ isLoading ? 'Création en cours...' : 'Créer une salle' }}
+  </button>
+
+  <div *ngIf="createdRoomId" class="mt-6 space-y-4 text-center">
+    <p class="text-green-600">Salle créée avec succès 🎉</p>
+    <p class="text-sm">ID de la salle : <strong>{{ createdRoomId }}</strong></p>
+
+    <div class="flex justify-center">
+      <a [routerLink]="['/room', createdRoomId]" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded">
+        Accéder à la salle
+      </a>
+    </div>
+  </div>
+</div>
